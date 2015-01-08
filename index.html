@@ -1,0 +1,62 @@
+<html ng-app="habitApp">
+  <head>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+		<link rel="stylesheet" href="bootstrap.css">
+		<script type="text/javascript" src="app.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<h1>Habit Graph</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="well">
+						<p>
+							Enter description here
+						</p>
+					</div>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col-xs-12">					
+					<div ng-controller="HabitController">
+						<h2>Add a Habit Loop</h2>
+						<form ng-submit="addHabit()">
+							<input type="text" ng-model="habit.cue" placeholder="Cue" />
+							<input type="text" ng-model="habit.routine" placeholder="Routine" />
+							<input type="text" ng-model="habit.reward" placeholder="Reward" />
+							<input class="btn-primary" type="submit" value="Add" />
+						</form>
+						<h2>
+							Habits - 
+							<small><input type="text" ng-model="search" class="search-query" placeholder="Search" /></small>
+						</h2>
+						
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Cue</th>
+									<th>Routine</th>
+									<th>Reward</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="habit in habits | filter:search | orderBy: 'cue'">
+									<td>{{habit.cue}}</td>
+									<td>{{habit.routine}}</td>
+									<td>{{habit.reward}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div> 
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	</body>
+</html>
