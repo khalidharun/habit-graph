@@ -1,0 +1,24 @@
+{
+  "name": "HabitGraph",
+  "version": "0.0.0",
+  "authors": [
+    "Khalid Harun <khalid.harun@gmail.com>"
+  ],
+  "main": "index.html",
+  "keywords": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+		"vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ng-lodash": "~0.1.0"
+  }
+}
