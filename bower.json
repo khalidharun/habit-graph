@@ -14,11 +14,12 @@
     "**/.*",
     "node_modules",
     "bower_components",
-		"vendor",
+    "vendor",
     "test",
     "tests"
   ],
   "dependencies": {
-    "ng-lodash": "~0.1.0"
+    "ng-lodash": "~0.1.0",
+    "vis": "~3.7.2"
   }
 }

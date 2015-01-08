@@ -11,4 +11,23 @@ angular.module('habitApp', [])
 			$scope.habit = {};
       window.localStorage.setItem('habits', angular.toJson($scope.habits));
 		};
-	}]);
+	}])
+  .controller('GraphController', ['$scope', function($scope) {
+    $scope.nodes = [];
+
+    var storedHabits = localStorage.getItem('habits');
+    if (storedHabits) {
+      var habits = angular.fromJson(storedHabits);
+      angular.forEach(habits, function(v,k) {
+        var from = findNode(v.cue);
+        var to = findNode(v.routine);
+
+      });
+    }
+
+
+    $scope.addNode = function() {
+
+    };
+  }]);
+;
