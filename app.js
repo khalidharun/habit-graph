@@ -8,14 +8,14 @@ angular.module('habitApp', [])
     };
     var container = document.getElementById('habitGraph');
     var options = {
-			width: '100%',
-			height: '400px',
+      width: '100%',
+      height: '400px',
       navigation: true,
-			edges: {
-				style: 'arrow'
-			}
-		};
-		var network = new vis.Network(container, data, options);
+      edges: {
+        style: 'arrow'
+      }
+    };
+    var network = new vis.Network(container, data, options);
 
     $scope.addNode = function (from, to) {
       var id1 = from.toLowerCase();
@@ -37,7 +37,7 @@ angular.module('habitApp', [])
 
     $rootScope.$broadcast("requestHabits");
   }])
-	.controller('HabitController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+  .controller('HabitController', ['$rootScope', '$scope', function ($rootScope, $scope) {
 
     $scope.init = function (reset) {
       if (reset) {
@@ -49,17 +49,17 @@ angular.module('habitApp', [])
         window.localStorage.setItem('habits', angular.toJson($scope.habits));
       } else {
         var storedHabits = window.localStorage.getItem('habits');
-		    $scope.habits = (storedHabits) ? angular.fromJson(storedHabits) : [];
+        $scope.habits = (storedHabits) ? angular.fromJson(storedHabits) : [];
       }
       $rootScope.$broadcast('resetHabits');
     };
 
-		$scope.addHabit = function () {
-			$scope.habits.push($scope.habit);
+    $scope.addHabit = function () {
+      $scope.habits.push($scope.habit);
       window.localStorage.setItem('habits', angular.toJson($scope.habits));
       $rootScope.$broadcast("addHabit", angular.copy($scope.habit));
-			$scope.habit = {};
-		};
+      $scope.habit = {};
+    };
 
     $rootScope.$on("requestHabits", function () {
       angular.forEach($scope.habits, function (habit) {
@@ -68,4 +68,4 @@ angular.module('habitApp', [])
     });
 
     $scope.init();
-	}]);
+  }]);
