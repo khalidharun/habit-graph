@@ -39,7 +39,7 @@ angular.module('habitApp', [])
   }])
 	.controller('HabitController', ['$rootScope', '$scope', function ($rootScope, $scope) {
 
-    $scope.init = function (reset=false) {
+    $scope.init = function (reset) {
       if (reset) {
         $scope.habits = [
           {cue: 'Hear alarm', routine: 'Get out of bed', reward: 'untie knot #1'},
