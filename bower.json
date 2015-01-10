@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "ng-lodash": "~0.1.0",
-    "vis": "~3.7.2"
+    "vis": "~3.7.2",
+    "angular-uuid4": "~0.3.0"
   }
 }
