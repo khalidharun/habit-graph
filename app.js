@@ -1,4 +1,4 @@
-angular.module('habitApp', [])
+angular.module('habitApp', ['ngLodash', 'uuid4'])
   .controller('GraphController', ['$rootScope', '$scope', function ($rootScope, $scope) {
     var nodes = new vis.DataSet();
     var edges = new vis.DataSet();
@@ -37,28 +37,36 @@ angular.module('habitApp', [])
 
     $rootScope.$broadcast("requestHabits");
   }])
-  .controller('HabitController', ['$rootScope', '$scope', function ($rootScope, $scope) {
-
+  .controller('HabitController', ['$rootScope', '$scope', 'lodash', 'uuid4', function ($rootScope, $scope, _, uuid4) {
+    function saveHabits() {
+      window.localStorage.setItem('habits', angular.toJson($scope.habits));
+    }
+    
     $scope.init = function (reset) {
       if (reset) {
         $scope.habits = [
-          {cue: 'Hear alarm', routine: 'Get out of bed', reward: 'untie knot #1'},
-          {cue: 'Get out of bed', routine: 'Do Wudu', reward: 'untie knot #2'},
-          {cue: 'Do Wudu', routine: 'Pray Fajr', reward: 'untie knot #3'}
+          {cue: 'Hear alarm', routine: 'Get out of bed', reward: '10 pts'},
+          {cue: 'Get out of bed', routine: 'Use the bathroom', reward: '20 pts'},
+          {cue: 'Use the bathroom', routine: 'Go to the Gym', reward: '30 pts'}
         ];
-        window.localStorage.setItem('habits', angular.toJson($scope.habits));
       } else {
         var storedHabits = window.localStorage.getItem('habits');
         $scope.habits = (storedHabits) ? angular.fromJson(storedHabits) : [];
       }
-      $rootScope.$broadcast('resetHabits');
+      // Make sure habits have uuids
+      $scope.habits = _.map($scope.habits, function(item) {
+        return _.defaults(item, {uuid: uuid4.generate()});
+      });
     };
 
     $scope.addHabit = function () {
+      $scope.habit.uuid = uuid4.generate();
       $scope.habits.push($scope.habit);
-      window.localStorage.setItem('habits', angular.toJson($scope.habits));
-      $rootScope.$broadcast("addHabit", angular.copy($scope.habit));
       $scope.habit = {};
+    };
+
+    $scope.dropHabit = function (uuid) {
+      _.remove($scope.habits, function(item) {return item.uuid == uuid;});
     };
 
     $rootScope.$on("requestHabits", function () {
@@ -67,5 +75,10 @@ angular.module('habitApp', [])
       });
     });
 
+    $scope.$watchCollection('habits', function (newHabits, oldHabits) {
+      saveHabits();
+      $rootScope.$broadcast('resetHabits');   
+    });
+    
     $scope.init();
   }]);
